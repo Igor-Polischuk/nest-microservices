@@ -1,6 +1,8 @@
 FROM node:18-alpine AS base
 RUN npm i -g pnpm
 
+EXPOSE 3000 50051
+
 # development stage
 FROM base AS development 
 ARG APP 
