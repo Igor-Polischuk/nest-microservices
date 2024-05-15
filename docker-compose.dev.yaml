@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  gateway:
+    container_name: gateway
+    build:
+      context: .
+      target: development
+      args:
+        - APP=gateway
+    command: "npm run start:dev gateway"
+    ports: 
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+  user-service:
+    container_name: user_service
+    build:
+      context: .
+      target: development
+      args:
+        - APP=users
+    command: "npm run start:dev users"
+    ports: 
+      - "3001:3001"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
