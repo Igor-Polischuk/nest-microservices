@@ -31,7 +31,28 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
-
+    env_file:
+      - .env
+    depends_on:
+      - user_service_db
+  user_service_db:
+    image: postgres
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - backend
+    environment:
+      POSTGRES_DB: ${USER_SERVICE_DB_DATABASE}
+      POSTGRES_USER: ${USER_SERVICE_DB_USER}
+      POSTGRES_PASSWORD: ${USER_SERVICE_DB_PASSWORD}
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    container_name: "user_service_db"
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
 
 networks:
   backend:
