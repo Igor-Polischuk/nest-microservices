@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
-import { DatabaseModule } from 'libs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { PostgresConnectionModule } from 'libs/common';
 import { UserEntity } from './database/entities/user.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
-    DatabaseModule.forRoot('USER_SERVICE'),
+    PostgresConnectionModule.forRoot('USER_SERVICE'),
     TypeOrmModule.forFeature([UserEntity]),
   ],
   controllers: [UsersController],

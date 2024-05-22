@@ -3,10 +3,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({})
-export class DatabaseModule {
+export class PostgresConnectionModule {
   static forRoot(serviceName: string): DynamicModule {
     return {
-      module: DatabaseModule,
+      module: PostgresConnectionModule,
       imports: [
         TypeOrmModule.forRootAsync({
           imports: [ConfigModule],
