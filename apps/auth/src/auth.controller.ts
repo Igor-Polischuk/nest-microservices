@@ -31,7 +31,7 @@ export class AuthController implements AuthServiceController {
   signUp(
     request: CreateUserDto,
   ): TokensDTO | Promise<TokensDTO> | Observable<TokensDTO> {
-    throw new Error('Method not implemented.');
+    return this.authService.sigUp(request);
   }
   logOut(
     request: LogOutDTO,
@@ -42,10 +42,5 @@ export class AuthController implements AuthServiceController {
     request: VerifyAccessTokenDTO,
   ): User | Promise<User> | Observable<User> {
     throw new Error('Method not implemented.');
-  }
-
-  @Get()
-  getHello(): string {
-    return this.authService.getHello();
   }
 }
