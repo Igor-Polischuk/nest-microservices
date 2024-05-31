@@ -23,5 +23,4 @@ message User {
     string name = 2;
     string lastName = 3;
     string email = 4;
-    string password = 5;
 }

@@ -29,13 +29,6 @@ export class UsersController implements UserServiceController {
     const user = this.users.find((u) => u.id === id);
 
     if (!user) {
-      return {
-        email: 'default',
-        id: 'id',
-        name: 'micro',
-        lastName: 'service',
-        password: 'secret',
-      };
       throw new NotFoundException('Not found such user');
     }
 

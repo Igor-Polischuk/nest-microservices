@@ -20,9 +20,6 @@ export class PostgresConnectionModule {
               username: configService.get<string>(`${serviceName}_DB_USER`),
               password: configService.get<string>(`${serviceName}_DB_PASSWORD`),
               synchronize: false,
-              keepConnectionAlive: configService.get<boolean>(
-                'DB_KEEP_CONNECTION_ALIVE',
-              ),
               autoLoadEntities: true,
             };
           },

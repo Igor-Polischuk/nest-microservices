@@ -1,0 +1,36 @@
+syntax = 'proto3';
+
+package auth;
+
+import "proto/user.proto";
+import "google/protobuf/wrappers.proto";
+
+service AuthService {
+    rpc SignIn (SignInDto) returns (TokensDTO);
+    rpc RefreshToken (RefreshTokenDTO) returns (TokensDTO);
+    rpc SignUp (user.CreateUserDto) returns (TokensDTO);
+    rpc LogOut (LogOutDTO) returns (google.protobuf.BoolValue);
+    rpc VerifyAccessToken (VerifyAccessTokenDTO) returns (user.User); 
+};
+
+message SignInDto {
+    string email = 1;
+    string password = 2;
+}
+
+message LogOutDTO {
+    string refreshToken = 1;
+}
+
+message RefreshTokenDTO {
+    string refreshToken = 1;
+}
+
+message VerifyAccessTokenDTO {
+    string accessToken = 1;
+}
+
+message TokensDTO {
+    string refreshToken = 1;
+    string accessToken = 2;
+}

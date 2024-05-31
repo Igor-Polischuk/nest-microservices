@@ -21,7 +21,8 @@
     "test:e2e": "jest --config ./apps/nest-app/test/jest-e2e.json",
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:generate": "ts-node ./scripts/generate-migration.ts",
-    "migration:run": "ts-node ./scripts/run-migration.ts"
+    "migration:run": "ts-node ./scripts/run-migration.ts",
+    "generate-proto": "protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./ --ts_proto_opt=nestJs=true ./proto/user.proto ./proto/auth.proto"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.10.8",

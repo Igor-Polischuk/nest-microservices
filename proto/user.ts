@@ -3,7 +3,6 @@
 //   protoc-gen-ts_proto  v1.175.1
 //   protoc               v3.20.3
 // source: proto/user.proto
-//protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./ --ts_proto_opt=nestJs=true ./proto/user.proto
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
@@ -26,7 +25,6 @@ export interface User {
   name: string;
   lastName: string;
   email: string;
-  password: string;
 }
 
 export const USER_PACKAGE_NAME = "user";
