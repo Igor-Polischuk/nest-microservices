@@ -6,8 +6,6 @@ import { ValidationPipe } from '@nestjs/common';
 import { AUTH_PACKAGE_NAME } from 'proto/auth';
 
 async function bootstrap() {
-  console.log('auth');
-  console.log(join(__dirname, '../auth.proto'));
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AuthModule,
     {
