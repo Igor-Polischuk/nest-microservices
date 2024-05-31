@@ -2,7 +2,7 @@ syntax = 'proto3';
 
 package auth;
 
-import "proto/user.proto";
+import "user.proto";
 import "google/protobuf/wrappers.proto";
 
 service AuthService {

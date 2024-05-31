@@ -1,4 +1,4 @@
-import { Controller, NotFoundException } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { UsersService } from './users.service';
 import {
   CreateUserDto,
@@ -12,26 +12,17 @@ import { Observable } from 'rxjs';
 @Controller()
 @UserServiceControllerMethods()
 export class UsersController implements UserServiceController {
-  private users: User[] = [];
-
   constructor(private readonly usersService: UsersService) {}
 
-  createUser(userDto: CreateUserDto): User | Observable<User> | Promise<User> {
-    const newUser: User = { ...userDto, id: this.users.length + '' };
-    this.users.push(newUser);
-
-    return newUser;
+  createUser(
+    createUserDTO: CreateUserDto,
+  ): User | Observable<User> | Promise<User> {
+    return this.usersService.createUser(createUserDTO);
   }
 
   findUserById({
     id,
   }: FindOneUserDto): User | Promise<User> | Observable<User> {
-    const user = this.users.find((u) => u.id === id);
-
-    if (!user) {
-      throw new NotFoundException('Not found such user');
-    }
-
-    return user;
+    return this.usersService.findById(id);
   }
 }

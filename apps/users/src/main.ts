@@ -5,6 +5,8 @@ import { USER_PACKAGE_NAME } from 'proto/user';
 import { join } from 'path';
 
 async function bootstrap() {
+  console.log('main');
+  console.log(join(__dirname, '../user.proto'));
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     UsersModule,
     {

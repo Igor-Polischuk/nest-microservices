@@ -1,9 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Controller, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import {
   AuthServiceController,
   AuthServiceControllerMethods,
+  LogOutDTO,
+  RefreshTokenDTO,
+  SignInDto,
   TokensDTO,
+  VerifyAccessTokenDTO,
 } from 'proto/auth';
 import { BoolValue } from 'google/protobuf/wrappers';
 import { CreateUserDto, User } from 'proto/user';

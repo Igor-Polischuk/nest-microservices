@@ -8,11 +8,11 @@ services:
       target: development
       args:
         - APP=gateway
-    command: "npm run start:dev gateway"
+    command: 'npm run start:dev gateway'
     networks:
       - backend
-    ports: 
-      - "3000:3000"
+    ports:
+      - '3000:3000'
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
@@ -23,9 +23,9 @@ services:
       target: development
       args:
         - APP=users
-    command: "npm run start:dev users"
+    command: 'npm run start:dev users'
     expose:
-      - "50051"
+      - '50051'
     networks:
       - backend
     volumes:
@@ -35,6 +35,25 @@ services:
       - .env
     depends_on:
       - user_service_db
+  auth-service:
+    container_name: auth_service
+    build:
+      context: .
+      target: development
+      args:
+        - APP=auth
+    command: 'npm run start:dev auth'
+    expose:
+      - '50051'
+    networks:
+      - backend
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file:
+      - .env
+    depends_on:
+      - auth_service_db
   user_service_db:
     image: postgres
     restart: always
@@ -47,12 +66,30 @@ services:
       POSTGRES_USER: ${USER_SERVICE_DB_USER}
       POSTGRES_PASSWORD: ${USER_SERVICE_DB_PASSWORD}
     volumes:
-      - ./pgdata:/var/lib/postgresql/data
-    container_name: "user_service_db"
+      - ./pgdata/user:/var/lib/postgresql/data
+    container_name: 'user_service_db'
     expose:
       - 5432
     ports:
-      - "5432:5432"
+      - '5432:5432'
+  auth_service_db:
+    image: postgres
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - backend
+    environment:
+      POSTGRES_DB: ${AUTH_SERVICE_DB_DATABASE}
+      POSTGRES_USER: ${AUTH_SERVICE_DB_USER}
+      POSTGRES_PASSWORD: ${AUTH_SERVICE_DB_PASSWORD}
+    volumes:
+      - ./pgdata/auth:/var/lib/postgresql/data
+    container_name: 'auth_service_db'
+    expose:
+      - 5432
+    ports:
+      - '5433:5432'
 
 networks:
   backend:
