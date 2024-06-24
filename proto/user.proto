@@ -4,11 +4,16 @@ package user;
 
 service UserService {
     rpc CreateUser (CreateUserDto) returns (User);
-    rpc FindUserById (FindOneUserDto) returns (User);
+    rpc FindUserById (FindUserByIdDto) returns (User);
+    rpc FindUserByEmail (FindUserByEmailDto) returns (User);
 }
 
-message FindOneUserDto {
+message FindUserByIdDto {
     string id = 1;
+}
+
+message FindUserByEmailDto {
+    string email = 1;
 }
 
 message CreateUserDto {
@@ -23,4 +28,5 @@ message User {
     string name = 2;
     string lastName = 3;
     string email = 4;
+    string password = 5;
 }

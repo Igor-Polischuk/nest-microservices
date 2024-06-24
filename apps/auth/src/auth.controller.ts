@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import {
   AuthServiceController,
@@ -18,10 +18,11 @@ import { Observable } from 'rxjs';
 @AuthServiceControllerMethods()
 export class AuthController implements AuthServiceController {
   constructor(private readonly authService: AuthService) {}
+
   signIn(
-    request: SignInDto,
+    credentials: SignInDto,
   ): TokensDTO | Promise<TokensDTO> | Observable<TokensDTO> {
-    throw new Error('Method not implemented.');
+    return this.authService.signIn(credentials);
   }
   refreshToken(
     request: RefreshTokenDTO,

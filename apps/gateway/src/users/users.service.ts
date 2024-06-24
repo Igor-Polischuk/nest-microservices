@@ -3,12 +3,13 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import {
   CreateUserDto,
-  FindOneUserDto,
+  FindUserByIdDto,
   User,
   USER_PACKAGE_NAME,
   USER_SERVICE_NAME,
   UserServiceClient,
 } from 'proto/user';
+import { callGrpcService } from 'libs/common';
 
 @Injectable()
 export class UsersService {
@@ -22,7 +23,7 @@ export class UsersService {
     return this.userGrpcService.createUser(createUserDto);
   }
 
-  async findUserById({ id }: FindOneUserDto) {
-    return this.userGrpcService.findUserById({ id });
+  async findUserById({ id }: FindUserByIdDto) {
+    return callGrpcService(this.userGrpcService.findUserById({ id }));
   }
 }

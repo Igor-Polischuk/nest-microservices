@@ -2,7 +2,8 @@ import { Controller } from '@nestjs/common';
 import { UsersService } from './users.service';
 import {
   CreateUserDto,
-  FindOneUserDto,
+  FindUserByEmailDto,
+  FindUserByIdDto,
   User,
   UserServiceController,
   UserServiceControllerMethods,
@@ -13,6 +14,11 @@ import { Observable } from 'rxjs';
 @UserServiceControllerMethods()
 export class UsersController implements UserServiceController {
   constructor(private readonly usersService: UsersService) {}
+  findUserByEmail({
+    email,
+  }: FindUserByEmailDto): User | Observable<User> | Promise<User> {
+    return this.usersService.findByEmail(email);
+  }
 
   createUser(
     createUserDTO: CreateUserDto,
@@ -22,7 +28,7 @@ export class UsersController implements UserServiceController {
 
   findUserById({
     id,
-  }: FindOneUserDto): User | Promise<User> | Observable<User> {
+  }: FindUserByIdDto): User | Promise<User> | Observable<User> {
     return this.usersService.findById(id);
   }
 }

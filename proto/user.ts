@@ -3,14 +3,19 @@
 //   protoc-gen-ts_proto  v1.175.1
 //   protoc               v3.20.3
 // source: proto/user.proto
+
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
 
 export const protobufPackage = "user";
 
-export interface FindOneUserDto {
+export interface FindUserByIdDto {
   id: string;
+}
+
+export interface FindUserByEmailDto {
+  email: string;
 }
 
 export interface CreateUserDto {
@@ -25,6 +30,7 @@ export interface User {
   name: string;
   lastName: string;
   email: string;
+  password: string;
 }
 
 export const USER_PACKAGE_NAME = "user";
@@ -32,18 +38,22 @@ export const USER_PACKAGE_NAME = "user";
 export interface UserServiceClient {
   createUser(request: CreateUserDto): Observable<User>;
 
-  findUserById(request: FindOneUserDto): Observable<User>;
+  findUserById(request: FindUserByIdDto): Observable<User>;
+
+  findUserByEmail(request: FindUserByEmailDto): Observable<User>;
 }
 
 export interface UserServiceController {
   createUser(request: CreateUserDto): Promise<User> | Observable<User> | User;
 
-  findUserById(request: FindOneUserDto): Promise<User> | Observable<User> | User;
+  findUserById(request: FindUserByIdDto): Promise<User> | Observable<User> | User;
+
+  findUserByEmail(request: FindUserByEmailDto): Promise<User> | Observable<User> | User;
 }
 
 export function UserServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["createUser", "findUserById"];
+    const grpcMethods: string[] = ["createUser", "findUserById", "findUserByEmail"];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("UserService", method)(constructor.prototype[method], method, descriptor);
