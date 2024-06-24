@@ -2,7 +2,6 @@ import { NestFactory } from '@nestjs/core';
 import { AuthModule } from './auth.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { join } from 'path';
-import { ValidationPipe } from '@nestjs/common';
 import { AUTH_PACKAGE_NAME } from 'proto/auth';
 
 async function bootstrap() {
@@ -16,12 +15,6 @@ async function bootstrap() {
         url: '0.0.0.0:50051',
       },
     },
-  );
-
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-    }),
   );
 
   app.listen();
