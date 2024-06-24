@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { GatewayModule } from './gateway.module';
-import { RpcExceptionFilter } from 'libs/common/filters/rcp-exception-filter';
+import { RpcExceptionFilter } from 'libs/common/filters';
 
 async function bootstrap() {
   const app = await NestFactory.create(GatewayModule);

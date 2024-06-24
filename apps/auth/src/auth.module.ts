@@ -7,9 +7,12 @@ import { TokenEntity } from './database/entities/token.entity';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { join } from 'path';
 import { USER_PACKAGE_NAME } from 'proto/user';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     PostgresConnectionModule.forRoot('AUTH_SERVICE'),
     TypeOrmModule.forFeature([TokenEntity]),
     ClientsModule.register([
@@ -23,6 +26,16 @@ import { USER_PACKAGE_NAME } from 'proto/user';
         },
       },
     ]),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        secret: config.get('JWT_SECRET'),
+        signOptions: {
+          expiresIn: config.get('JWT_EXPIRES', '5m'),
+        },
+      }),
+    }),
   ],
   controllers: [AuthController],
   providers: [AuthService],

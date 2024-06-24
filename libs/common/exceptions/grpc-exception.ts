@@ -7,9 +7,9 @@ type GrpcExceptionParams = {
   code: GrpcError;
 };
 
-export type CommonRpcException = {
+export type CommonGrpcException = {
   code: number;
-  details: string;
+  message: string;
 };
 
 export class GrpcException extends RpcException {
