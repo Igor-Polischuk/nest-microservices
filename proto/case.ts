@@ -9,7 +9,7 @@ import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
 import { User } from "./user";
 
-export const protobufPackage = "user";
+export const protobufPackage = "case";
 
 export enum CaseStatus {
   Pending = 0,
@@ -114,7 +114,7 @@ export interface DeleteCaseDto {
   id: string;
 }
 
-export const USER_PACKAGE_NAME = "user";
+export const CASE_PACKAGE_NAME = "case";
 
 export interface CaseServiceClient {
   createCase(request: CreateCaseDto): Observable<Case>;
