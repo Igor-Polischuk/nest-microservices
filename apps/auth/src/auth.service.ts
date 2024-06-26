@@ -76,12 +76,23 @@ export class AuthService {
     return tokens;
   }
 
+  async verifyToken(token: string) {
+    try {
+      return await this.jwtService.verifyAsync(token);
+    } catch (error) {
+      throw new GrpcException({
+        code: GrpcError.UNAUTHENTICATED,
+        message: 'UNAUTHENTICATED',
+      });
+    }
+  }
+
   private async generateTokens({
     email,
     id,
   }: TokenPayload): Promise<TokensDTO> {
     const payload: TokenPayload = { email, id };
-    const accessToken = this.jwtService.sign(payload);
+    const accessToken = await this.jwtService.signAsync(payload);
     const refreshToken =
       await this.refreshTokenService.generateRefreshToken(payload);
     //TODO: handle when user sign-ups from different devices and delete invalid tokens

@@ -39,9 +39,9 @@ export class AuthController implements AuthServiceController {
   ): BoolValue | Promise<BoolValue> | Observable<BoolValue> {
     throw new Error('Method not implemented.');
   }
-  verifyAccessToken(
-    request: VerifyAccessTokenDTO,
-  ): User | Promise<User> | Observable<User> {
-    throw new Error('Method not implemented.');
+  verifyAccessToken({
+    accessToken,
+  }: VerifyAccessTokenDTO): User | Promise<User> | Observable<User> {
+    return this.authService.verifyToken(accessToken);
   }
 }
