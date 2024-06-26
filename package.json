@@ -22,8 +22,8 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:generate": "ts-node ./scripts/generate-migration.ts",
     "migration:run": "ts-node ./scripts/run-migration.ts",
-    "generate-proto": "protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./ --ts_proto_opt=nestJs=true ./proto/user.proto ./proto/auth.proto"
-  },
+    "generate-proto": "find ./proto -name '*.proto' | xargs protoc --proto_path=./proto --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./proto --ts_proto_opt=nestJs=true"
+},
   "dependencies": {
     "@grpc/grpc-js": "^1.10.8",
     "@grpc/proto-loader": "^0.7.13",
