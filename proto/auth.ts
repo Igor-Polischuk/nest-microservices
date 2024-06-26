@@ -2,12 +2,12 @@
 // versions:
 //   protoc-gen-ts_proto  v1.175.1
 //   protoc               v3.20.3
-// source: proto/auth.proto
+// source: auth.proto
 
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
-import { BoolValue } from "../google/protobuf/wrappers";
+import { BoolValue } from "./google/protobuf/wrappers";
 import { CreateUserDto, User } from "./user";
 
 export const protobufPackage = "auth";

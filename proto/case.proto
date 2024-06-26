@@ -1,0 +1,114 @@
+syntax = 'proto3';
+
+package user;
+
+import "user.proto";
+
+service CaseService {
+    rpc CreateCase (CreateCaseDto) returns (Case);
+    rpc UpdateCase (UpdateCaseDto) returns (Case);
+    rpc GetCase (GetCaseDto) returns (Case);
+    rpc GetCases (GetCasesDto) returns (CaseArray);
+    rpc DeleteCase (DeleteCaseDto) returns (Case);
+    rpc ApproveUsers (ApproveUsersDto) returns (Case);
+    rpc ApplyForTheCase (ApplyForTheCaseDto) returns (Case);
+}
+
+message Case {
+    string id = 1;
+    user.User author = 2;
+    CaseStatus status = 3;
+    string title = 4;
+    string description = 5;
+    CaseType type = 6;
+    LocationType locationType = 7;
+    repeated Candidates candidates = 8;
+    repeated user.User approvedCandidates = 9;
+    repeated string tags = 13;
+    optional int32 radius = 10;
+    optional float lat = 11;
+    optional float lon = 12;
+    optional string url = 14;
+}
+
+message CaseArray {
+    repeated Case cases = 1;
+  }
+
+message Candidates {
+    user.User user = 1;
+    string message = 2;
+}
+
+message CreateCaseDto {
+    user.User author = 1;
+    string title = 2;
+    string description = 3;
+    CaseType type = 4;
+    LocationType locationType = 5;
+    repeated string tags = 6;
+    optional int32 radius = 7;
+    optional float lat = 8;
+    optional float lon = 9;
+    optional string url = 10;
+}
+
+message UpdateCaseDto {
+    optional string title = 2;
+    optional string description = 3;
+    optional CaseType type = 4;
+    optional LocationType locationType = 5;
+    repeated string tags = 6;
+    optional int32 radius = 7;
+    optional float lat = 8;
+    optional float lon = 9;
+    optional string url = 10;
+    optional CaseStatus status = 11;
+}
+
+message GetCasesDto {
+    CasesFilters filters = 1;
+    int32 skip = 2;
+    int32 take = 3;
+}
+
+message ApplyForTheCaseDto {
+    string caseId = 1;
+    optional string message = 2;
+}
+
+message CasesFilters {
+    optional CaseType type = 1;
+    optional LocationType locationType = 2;
+    optional int32 radius = 3;
+    repeated string tags = 4;
+}
+
+message ApproveUsersDto {
+    repeated user.User users = 1;
+    string caseId = 2;
+}
+
+message GetCaseDto {
+    string id = 1;
+}
+message DeleteCaseDto {
+    string id = 1;
+}
+
+enum CaseStatus {
+    Pending = 0;
+    InProgress = 1;
+    Closed = 2;
+}
+
+enum CaseType{
+    HelpRequest = 0;
+    EventRequest = 1;
+    SocietyRequest = 2;
+}
+
+enum LocationType {
+    Offline = 0;
+    Online = 1;
+}
