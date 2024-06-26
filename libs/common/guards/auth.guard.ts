@@ -13,14 +13,28 @@ import {
 import { Request } from 'express';
 import { callGrpcService } from '../utils';
 import { TokenPayload } from 'apps/auth/src/types';
+import { IS_PUBLIC_KEY } from './public';
+import { Reflector } from '@nestjs/core';
 
 export class AuthGuard implements CanActivate {
   private authGrpcService: AuthServiceClient;
-  constructor(@Inject(AUTH_PACKAGE_NAME) private grpcClient: ClientGrpc) {
+  constructor(
+    @Inject(AUTH_PACKAGE_NAME) private grpcClient: ClientGrpc,
+    private reflector: Reflector,
+  ) {
     this.authGrpcService =
       grpcClient.getService<AuthServiceClient>(AUTH_SERVICE_NAME);
   }
   async canActivate(context: ExecutionContext) {
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+    if (isPublic) {
+      // 💡 See this condition
+      return true;
+    }
+
     const request = context
       .switchToHttp()
       .getRequest<Request & { user: TokenPayload }>();

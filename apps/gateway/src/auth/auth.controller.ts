@@ -1,8 +1,8 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'proto/user';
 import { SignInDto } from 'proto/auth';
-import { AuthGuard } from 'libs/common/guards/auth.guard';
+import { Public } from 'libs/common/guards/public';
 
 @Controller('auth')
 export class AuthController {
@@ -19,8 +19,13 @@ export class AuthController {
   }
 
   @Get('/private-test')
-  @UseGuards(AuthGuard)
   privateTest(@Req() req: any) {
     return req.user;
+  }
+
+  @Public()
+  @Get('/public-test')
+  publicTest() {
+    return { message: 'Hello, everyone!' };
   }
 }

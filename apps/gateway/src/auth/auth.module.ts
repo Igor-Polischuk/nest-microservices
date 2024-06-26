@@ -4,6 +4,8 @@ import { AuthController } from './auth.controller';
 import { AUTH_PACKAGE_NAME } from 'proto/auth';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { join } from 'path';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from 'libs/common/guards/auth.guard';
 
 @Module({
   imports: [
@@ -20,6 +22,12 @@ import { join } from 'path';
     ]),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class AuthModule {}
