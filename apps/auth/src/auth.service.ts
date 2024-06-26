@@ -14,6 +14,7 @@ import * as bcrypt from 'bcrypt';
 import { GrpcError, GrpcException } from 'libs/common/exceptions';
 import { TokenPayload } from './types';
 import { JwtService } from '@nestjs/jwt';
+import { RefreshTokenService } from './refresh-token.service';
 
 @Injectable()
 export class AuthService {
@@ -22,6 +23,7 @@ export class AuthService {
     @Inject(USER_PACKAGE_NAME) private grpcClient: ClientGrpc,
     private configService: ConfigService,
     private jwtService: JwtService,
+    private refreshTokenService: RefreshTokenService,
   ) {
     this.userGrpcService =
       grpcClient.getService<UserServiceClient>(USER_SERVICE_NAME);
@@ -80,13 +82,13 @@ export class AuthService {
   }: TokenPayload): Promise<TokensDTO> {
     const payload: TokenPayload = { email, id };
     const accessToken = this.jwtService.sign(payload);
-    // const refreshToken =
-    //   await this.refreshTokenStrategy.generateRefreshToken(payload);
-
-    // await this.refreshTokenStrategy.saveRefreshToken(user.id, refreshToken);
+    const refreshToken =
+      await this.refreshTokenService.generateRefreshToken(payload);
+    //TODO: handle when user sign-ups from different devices and delete invalid tokens
+    await this.refreshTokenService.saveRefreshToken(id, refreshToken);
 
     return {
-      refreshToken: 'add generating refresh token!',
+      refreshToken,
       accessToken,
     };
   }

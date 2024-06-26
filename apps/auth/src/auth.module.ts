@@ -9,6 +9,7 @@ import { join } from 'path';
 import { USER_PACKAGE_NAME } from 'proto/user';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { RefreshTokenService } from './refresh-token.service';
 
 @Module({
   imports: [
@@ -38,6 +39,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, RefreshTokenService],
 })
 export class AuthModule {}
