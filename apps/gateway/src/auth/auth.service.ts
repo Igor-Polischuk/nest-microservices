@@ -29,4 +29,8 @@ export class AuthService {
   async refresh(refreshToken: string): Promise<TokensDTO> {
     return callGrpcService(this.authGrpcService.refreshToken({ refreshToken }));
   }
+
+  async logOut(refreshToken: string) {
+    return callGrpcService(this.authGrpcService.logOut({ refreshToken }));
+  }
 }

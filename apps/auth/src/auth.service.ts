@@ -111,6 +111,12 @@ export class AuthService {
     };
   }
 
+  async logout(token: string) {
+    await this.refreshTokenService.clearRefreshToken(token);
+
+    return { value: true };
+  }
+
   private async generateTokens({
     email,
     id,

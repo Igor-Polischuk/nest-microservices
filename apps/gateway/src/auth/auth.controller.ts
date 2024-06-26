@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'proto/user';
-import { RefreshTokenDTO, SignInDto } from 'proto/auth';
+import { LogOutDTO, RefreshTokenDTO, SignInDto } from 'proto/auth';
 import { Public } from 'libs/common/guards';
 import { CurrentUser } from 'libs/common/decorators';
 import { TokenPayload } from 'apps/auth/src/types';
@@ -26,6 +26,11 @@ export class AuthController {
   @Post('/refresh')
   refresh(@Body() { refreshToken }: RefreshTokenDTO) {
     return this.authService.refresh(refreshToken);
+  }
+
+  @Post('/log-out')
+  logOut(@Body() { refreshToken }: LogOutDTO) {
+    return this.authService.logOut(refreshToken);
   }
 
   @Get('/private-test')

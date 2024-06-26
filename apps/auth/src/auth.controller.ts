@@ -37,7 +37,7 @@ export class AuthController implements AuthServiceController {
   logOut(
     request: LogOutDTO,
   ): BoolValue | Promise<BoolValue> | Observable<BoolValue> {
-    throw new Error('Method not implemented.');
+    return this.authService.logout(request.refreshToken);
   }
   verifyAccessToken({
     accessToken,
