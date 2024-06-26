@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'proto/user';
-import { SignInDto } from 'proto/auth';
+import { RefreshTokenDTO, SignInDto } from 'proto/auth';
 import { Public } from 'libs/common/guards';
 import { CurrentUser } from 'libs/common/decorators';
 import { TokenPayload } from 'apps/auth/src/types';
@@ -20,6 +20,12 @@ export class AuthController {
   @Post('/sign-in')
   signIn(@Body() credentials: SignInDto) {
     return this.authService.signIn(credentials);
+  }
+
+  @Public()
+  @Post('/refresh')
+  refresh(@Body() { refreshToken }: RefreshTokenDTO) {
+    return this.authService.refresh(refreshToken);
   }
 
   @Get('/private-test')

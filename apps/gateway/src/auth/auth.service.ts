@@ -25,4 +25,8 @@ export class AuthService {
   async signIn(credentials: SignInDto): Promise<TokensDTO> {
     return callGrpcService(this.authGrpcService.signIn(credentials));
   }
+
+  async refresh(refreshToken: string): Promise<TokensDTO> {
+    return callGrpcService(this.authGrpcService.refreshToken({ refreshToken }));
+  }
 }

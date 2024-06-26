@@ -87,6 +87,30 @@ export class AuthService {
     }
   }
 
+  async refreshToken(token: string): Promise<TokensDTO> {
+    const decoded = await this.refreshTokenService.validateRefreshToken(token);
+    const tokenFromDb = await this.refreshTokenService.findRefreshToken(token);
+
+    if (!decoded || !tokenFromDb) {
+      throw new GrpcException({
+        code: GrpcError.UNAUTHENTICATED,
+        message: 'UNAUTHENTICATED',
+      });
+    }
+
+    const user = await callGrpcService(
+      this.userGrpcService.findUserByEmail({ email: decoded.email }),
+    );
+
+    const { accessToken, refreshToken } = await this.generateTokens(user);
+    await this.refreshTokenService.clearRefreshToken(token);
+
+    return {
+      refreshToken,
+      accessToken,
+    };
+  }
+
   private async generateTokens({
     email,
     id,

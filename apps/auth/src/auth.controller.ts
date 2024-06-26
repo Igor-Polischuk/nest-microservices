@@ -24,10 +24,10 @@ export class AuthController implements AuthServiceController {
   ): TokensDTO | Promise<TokensDTO> | Observable<TokensDTO> {
     return this.authService.signIn(credentials);
   }
-  refreshToken(
-    request: RefreshTokenDTO,
-  ): TokensDTO | Promise<TokensDTO> | Observable<TokensDTO> {
-    throw new Error('Method not implemented.');
+  refreshToken({
+    refreshToken,
+  }: RefreshTokenDTO): TokensDTO | Promise<TokensDTO> | Observable<TokensDTO> {
+    return this.authService.refreshToken(refreshToken);
   }
   signUp(
     request: CreateUserDto,
