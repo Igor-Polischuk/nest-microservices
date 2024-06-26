@@ -12,9 +12,9 @@ import {
 } from 'proto/auth';
 import { Request } from 'express';
 import { callGrpcService } from '../utils';
-import { TokenPayload } from 'apps/auth/src/types';
 import { IS_PUBLIC_KEY } from './public';
 import { Reflector } from '@nestjs/core';
+import { TokenPayload } from '../types';
 
 export class AuthGuard implements CanActivate {
   private authGrpcService: AuthServiceClient;

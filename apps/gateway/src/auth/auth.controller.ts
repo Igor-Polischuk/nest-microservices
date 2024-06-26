@@ -1,26 +1,30 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'proto/user';
 import { SignInDto } from 'proto/auth';
-import { Public } from 'libs/common/guards/public';
+import { Public } from 'libs/common/guards';
+import { CurrentUser } from 'libs/common/decorators';
+import { TokenPayload } from 'apps/auth/src/types';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @Post('/sign-up')
   signUp(@Body() createUser: CreateUserDto) {
     return this.authService.signUp(createUser);
   }
 
+  @Public()
   @Post('/sign-in')
   signIn(@Body() credentials: SignInDto) {
     return this.authService.signIn(credentials);
   }
 
   @Get('/private-test')
-  privateTest(@Req() req: any) {
-    return req.user;
+  privateTest(@CurrentUser() user: TokenPayload) {
+    return user;
   }
 
   @Public()
